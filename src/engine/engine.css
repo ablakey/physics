@@ -63,6 +63,10 @@ html {
   container-type: inline-size;
 }
 
+.viewport {
+  width: 100%;
+  height: 100%;
+}
 /* Inspired by https://www.joshwcomeau.com/animation/3d-button/ */
 .arrows {
   display: flex;
