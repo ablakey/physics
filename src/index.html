@@ -1,10 +1,6 @@
 <html>
   <head>
-    <title>The Microwave</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☢️</text></svg>"
-    />
+    <title>Physics!</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -12,11 +8,49 @@
     />
   </head>
   <body>
-    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link rel="stylesheet" href="engine/engine.css" type="text/css" />
     <script type="module" src="main.ts"></script>
-    <div class="parent">
-      <div class="frame">
-        <div>I'm always a square.</div>
+    <div class="frame">
+      <div class="title-container"><h1>Robot Haunt</h1></div>
+      <div class="viewport-container">
+        <div class="viewport-sizer"></div>
+      </div>
+      <div class="controls-container">
+        <div class="arrows">
+          <div>
+            <button id="buttonLeft" class="pushable left">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front">󿭲</span>
+            </button>
+          </div>
+          <div>
+            <button id="buttonUp" class="pushable up">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front">󿭳</span>
+            </button>
+            <button id="buttonDown" class="pushable down">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front">󿭱</span>
+            </button>
+          </div>
+          <div>
+            <button id="buttonRight" class="pushable right">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front">󿭰</span>
+            </button>
+          </div>
+        </div>
+        <div id="buttons">
+          <button id="buttonAction" class="pushable action">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <span class="front">ACTION</span>
+          </button>
+        </div>
       </div>
     </div>
   </body>
