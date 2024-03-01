@@ -1,13 +1,15 @@
-import { Bodies, Composite, Engine as MatterEngine } from "matter-js";
+import { Composite, Engine as MatterEngine } from "matter-js";
 import { Viewport } from "pixi-viewport";
 import { Renderer } from "pixi.js";
 import { Entity } from "./entities/Entity";
 
 export class Engine {
-  renderer: Renderer;
-  viewport: Viewport;
-  physics: MatterEngine;
-  entities: Entity[] = [];
+  private renderer: Renderer;
+  private viewport: Viewport;
+  private physics: MatterEngine;
+  private entities: Set<Entity> = new Set();
+
+  private lastStamp: number = 0;
 
   constructor() {
     /**
@@ -36,32 +38,40 @@ export class Engine {
      * Matter
      */
     this.physics = MatterEngine.create();
+
     /**
      * Controls
      */
 
-    this.addWalls();
-    this.loop(0);
+    requestAnimationFrame(this.loop.bind(this));
   }
   add(entity: Entity) {
     Composite.add(this.physics.world, entity.body);
     this.viewport.addChild(entity.graphics);
-    this.entities.push(entity);
+    this.entities.add(entity);
   }
 
-  addWalls() {
-    const ground = Bodies.rectangle(0, 500, 1000, 10, { isStatic: true });
-    Composite.add(this.physics.world, [ground]);
+  remove(entity: Entity) {
+    Composite.remove(this.physics.world, entity.body);
+    this.viewport.removeChild(entity.graphics);
+    this.entities.delete(entity);
   }
 
-  loop(ms: DOMHighResTimeStamp) {
+  // addWalls() {
+  //   const ground = Bodies.rectangle(0, 500, 1000, 10, { isStatic: true });
+  //   Composite.add(this.physics.world, [ground]);
+  // }
+
+  loop(ms: number) {
+    const delta = ms - this.lastStamp;
+    this.lastStamp = ms;
     // console.log(ms);
     // Accept input
 
     // Make changes
 
     // Calculate physics
-    MatterEngine.update(this.physics);
+    MatterEngine.update(this.physics, delta);
 
     // Update entities
     this.entities.forEach((e) => e.update());
