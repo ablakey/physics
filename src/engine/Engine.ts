@@ -1,7 +1,7 @@
 import { Composite, Engine as MatterEngine } from "matter-js";
 import { Viewport } from "pixi-viewport";
 import { Renderer } from "pixi.js";
-import { Entity } from "./entities/Entity";
+import { Entity } from "./Entity";
 
 export class Engine {
   private renderer: Renderer;
@@ -32,12 +32,12 @@ export class Engine {
     });
 
     this.viewport.fitWidth(1000); // The width is always 1000 pixi units.
-    this.viewport.moveCenter(0, 0);
+    // this.viewport.moveCenter(0, 0);
 
     /**
      * Matter
      */
-    this.physics = MatterEngine.create();
+    this.physics = MatterEngine.create({ gravity: { y: 0 } });
 
     /**
      * Controls
@@ -45,10 +45,14 @@ export class Engine {
 
     requestAnimationFrame(this.loop.bind(this));
   }
-  add(entity: Entity) {
-    Composite.add(this.physics.world, entity.body);
-    this.viewport.addChild(entity.graphics);
-    this.entities.add(entity);
+  add(entity: Entity | Entity[]) {
+    const entities = Array.isArray(entity) ? entity : [entity];
+
+    entities.forEach((e) => {
+      Composite.add(this.physics.world, e.body);
+      this.viewport.addChild(e.graphics);
+      this.entities.add(e);
+    });
   }
 
   remove(entity: Entity) {
