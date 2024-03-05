@@ -14,7 +14,13 @@ export class Brownian extends Board {
       for (let y = 0; y < 1000; y += 25) {
         const p = new Entity(
           { x, y },
-          { type: "Circle", radius: 5, velocity: { x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20 } },
+          {
+            type: "Circle",
+            color: 0x89cff0,
+            radius: 5,
+            visible: false,
+            velocity: { x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20 },
+          },
         );
         this.particles.push(p);
         this.engine.add(p);
@@ -22,16 +28,20 @@ export class Brownian extends Board {
     }
 
     // Walls
-    const topWall = new Entity({ x: 500, y: 0 }, { type: "Box", width: 1000, height: 20, isStatic: true });
-    const bottomWall = new Entity({ x: 500, y: 1000 }, { type: "Box", width: 1000, height: 20, isStatic: true });
-    const leftWall = new Entity({ x: 0, y: 500 }, { type: "Box", width: 20, height: 1000, isStatic: true });
-    const rightWall = new Entity({ x: 1000, y: 500 }, { type: "Box", width: 20, height: 1000, isStatic: true });
+    const topWall = new Entity({ x: 500, y: -5 }, { type: "Box", width: 1000, height: 10, isStatic: true });
+    const bottomWall = new Entity({ x: 500, y: 1005 }, { type: "Box", width: 1000, height: 10, isStatic: true });
+    const leftWall = new Entity({ x: -5, y: 500 }, { type: "Box", width: 10, height: 1000, isStatic: true });
+    const rightWall = new Entity({ x: 1005, y: 500 }, { type: "Box", width: 10, height: 1000, isStatic: true });
 
     this.engine.add(ball);
     this.engine.add([topWall, bottomWall, leftWall, rightWall]);
 
+    this.engine.input.on("action:press", () => {
+      this.particles.forEach((p) => (p.visible = true));
+    });
+
     this.engine.input.on("action:release", () => {
-      this.particles.forEach((p) => (p.visible = !p.visible));
+      this.particles.forEach((p) => (p.visible = false));
     });
   }
 

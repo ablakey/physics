@@ -1,9 +1,13 @@
 import { Bodies, Body, Vector } from "matter-js";
 import { Graphics } from "pixi.js";
 
+const DEFAULT_RED = 0xde3249;
+
 type EntityOptions = {
   velocity?: Vector;
   isStatic?: boolean;
+  color?: number;
+  visible?: boolean;
 };
 
 type BoxOptions = EntityOptions & {
@@ -29,9 +33,8 @@ export class Entity {
       case "Box":
         const { width, height, isStatic } = options;
         this.body = Bodies.rectangle(pos.x, pos.y, width, height, { isStatic });
-
         this.graphics = new Graphics();
-        this.graphics.beginFill(0xde3249);
+        this.graphics.beginFill(options.color ?? DEFAULT_RED);
         this.graphics.drawRect(pos.x - width / 2, pos.y - height / 2, width, height);
         this.graphics.endFill();
         this.graphics.pivot.x = pos.x - width / 2;
@@ -47,10 +50,17 @@ export class Entity {
           frictionAir: 0,
           frictionStatic: 0,
         });
-
         this.graphics = new Graphics();
-        this.graphics.lineStyle(0).beginFill(0xde3249, 1).drawCircle(0, 0, radius).endFill();
+        this.graphics
+          .lineStyle(0)
+          .beginFill(options.color ?? DEFAULT_RED, 1)
+          .drawCircle(0, 0, radius)
+          .endFill();
         break;
+    }
+
+    if (options.visible !== undefined) {
+      this.visible = options.visible;
     }
 
     if (options?.velocity) {
