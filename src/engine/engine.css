@@ -192,3 +192,7 @@ html {
 .pushable:focus:not(:focus-visible) {
   outline: none;
 }
+
+.hidden {
+  visibility: hidden;
+}

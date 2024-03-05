@@ -2,20 +2,23 @@ import { Composite, Engine as MatterEngine } from "matter-js";
 import { Viewport } from "pixi-viewport";
 import { Renderer } from "pixi.js";
 import { Entity } from "./Entity";
+import { Board } from "./Board";
+import { Input } from "./Input";
 
 export class Engine {
   private renderer: Renderer;
   private viewport: Viewport;
   private physics: MatterEngine;
   private entities: Set<Entity> = new Set();
+  private board: Board | null = null;
+  public input: Input;
 
   private lastStamp: number = 0;
 
   constructor() {
-    /**
-     * Pixi
-     */
     const viewportEl = document.querySelector<HTMLCanvasElement>(".viewport")!;
+
+    this.input = new Input();
 
     this.renderer = new Renderer({
       antialias: true,
@@ -31,17 +34,9 @@ export class Engine {
       events: this.renderer.events,
     });
 
-    this.viewport.fitWidth(1000); // The width is always 1000 pixi units.
-    // this.viewport.moveCenter(0, 0);
+    this.viewport.fitWidth(1000);
 
-    /**
-     * Matter
-     */
     this.physics = MatterEngine.create({ gravity: { y: 0 } });
-
-    /**
-     * Controls
-     */
 
     requestAnimationFrame(this.loop.bind(this));
   }
@@ -61,6 +56,11 @@ export class Engine {
     this.entities.delete(entity);
   }
 
+  loadBoard(board: Board) {
+    this.board = board;
+    this.board.load();
+  }
+
   // addWalls() {
   //   const ground = Bodies.rectangle(0, 500, 1000, 10, { isStatic: true });
   //   Composite.add(this.physics.world, [ground]);
@@ -69,10 +69,10 @@ export class Engine {
   loop(ms: number) {
     const delta = ms - this.lastStamp;
     this.lastStamp = ms;
-    // console.log(ms);
     // Accept input
 
     // Make changes
+    this.board?.update();
 
     // Calculate physics
     MatterEngine.update(this.physics, delta);

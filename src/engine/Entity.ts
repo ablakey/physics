@@ -54,7 +54,7 @@ export class Entity {
     }
 
     if (options?.velocity) {
-      this.setVelocity(options.velocity);
+      this.velocity = options.velocity;
     }
   }
 
@@ -71,7 +71,23 @@ export class Entity {
     }
   }
 
-  setVelocity(velocity: Vector) {
+  get velocity() {
+    return this.body.velocity;
+  }
+
+  set velocity(velocity: Vector) {
     Body.setVelocity(this.body, velocity);
+  }
+
+  get speed() {
+    return this.body.speed;
+  }
+
+  get visible() {
+    return this.graphics.visible;
+  }
+
+  set visible(visible: boolean) {
+    this.graphics.visible = visible;
   }
 }
