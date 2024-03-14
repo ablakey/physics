@@ -1,5 +1,5 @@
 import { Engine } from "./engine";
-import { RocketScene } from "./scenes/Rocket";
+import { RocketScene } from "./scenes";
 
 function main() {
   const engine = new Engine();
