@@ -1,6 +1,6 @@
 import { Entity, Scene } from "../engine";
 
-export class Brownian extends Scene {
+export class BrownianScene extends Scene {
   particles: Entity[] = [];
 
   load(): void {
