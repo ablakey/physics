@@ -1,6 +1,6 @@
 import { Engine } from "./Engine";
 
-export abstract class Board {
+export abstract class Scene {
   engine: Engine;
 
   constructor(engine: Engine) {

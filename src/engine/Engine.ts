@@ -2,7 +2,7 @@ import { Composite, Engine as MatterEngine } from "matter-js";
 import { Viewport } from "pixi-viewport";
 import { Renderer } from "pixi.js";
 import { Entity } from "./Entity";
-import { Board } from "./Board";
+import { Scene } from "./Scene";
 import { Input } from "./Input";
 
 export class Engine {
@@ -13,7 +13,7 @@ export class Engine {
   private viewport: Viewport;
   private physics: MatterEngine;
   private entities: Set<Entity> = new Set();
-  private board: Board | null = null;
+  private scene: Scene | null = null;
   private lastStamp: number = 0;
 
   constructor() {
@@ -62,9 +62,9 @@ export class Engine {
     this.entities.delete(entity);
   }
 
-  loadBoard(board: Board) {
-    this.board = board;
-    this.board.load();
+  loadScene(scene: Scene) {
+    this.scene = scene;
+    this.scene.load();
   }
 
   private loop(ms: number) {
@@ -73,7 +73,7 @@ export class Engine {
 
     // If timestamp has fallen far behind, just drop all time.
     if (this.enabled && delta < 500) {
-      this.board?.update();
+      this.scene?.update();
       MatterEngine.update(this.physics, delta);
       this.entities.forEach((e) => e.update());
       this.renderer.render(this.viewport);
