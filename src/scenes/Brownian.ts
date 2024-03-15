@@ -4,6 +4,8 @@ export class BrownianScene extends Scene {
   particles: Entity[] = [];
 
   load(): void {
+    this.engine.physics.gravity.y = 0;
+
     this.engine.input.setEnabledButtons(["action"]);
     // Ball
     const ball = new Entity({ x: 500, y: 500 }, { type: "Circle", radius: 50 });

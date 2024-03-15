@@ -8,10 +8,10 @@ import { Input } from "./Input";
 export class Engine {
   public input: Input;
   public enabled = true;
+  public physics: MatterEngine;
 
   private renderer: Renderer;
   private viewport: Viewport;
-  private physics: MatterEngine;
   private entities: Set<Entity> = new Set();
   private scene: Scene | null = null;
   private lastStamp: number = 0;
@@ -37,7 +37,7 @@ export class Engine {
 
     this.viewport.fitWidth(1000);
 
-    this.physics = MatterEngine.create({ gravity: { y: 0 } });
+    this.physics = MatterEngine.create();
 
     document.addEventListener("visibilitychange", () => {
       this.enabled = !document.hidden;
