@@ -89,11 +89,6 @@ export class Entity {
     const { radius } = options;
     this.body = Bodies.circle(pos.x, pos.y, radius, {
       isStatic: options.isStatic,
-      inertia: Infinity,
-      restitution: 1,
-      friction: 0,
-      frictionAir: 0,
-      frictionStatic: 0,
     });
     this.graphics = new Graphics();
     this.graphics

@@ -1,10 +1,10 @@
 import { Engine } from "./engine";
-import { BrownianScene, RocketScene } from "./scenes";
+import { RocketScene } from "./scenes";
 
 function main() {
   const engine = new Engine();
 
-  const scene = new BrownianScene(engine);
+  const scene = new RocketScene(engine);
   engine.loadScene(scene);
 }
 

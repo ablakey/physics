@@ -9,6 +9,11 @@ export class BrownianScene extends Scene {
     this.engine.input.setEnabledButtons(["action"]);
     // Ball
     const ball = new Entity({ x: 500, y: 500 }, { type: "Circle", radius: 50 });
+    ball.body.inertia = Infinity;
+    ball.body.restitution = 1;
+    ball.body.friction = 0;
+    ball.body.frictionAir = 0;
+    ball.body.frictionStatic = 0;
 
     // Particles
     for (let x = 0; x < 1000; x += 25) {
@@ -23,6 +28,11 @@ export class BrownianScene extends Scene {
             velocity: { x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20 },
           },
         );
+        p.body.inertia = Infinity;
+        p.body.restitution = 1;
+        p.body.friction = 0;
+        p.body.frictionAir = 0;
+        p.body.frictionStatic = 0;
         this.particles.push(p);
         this.engine.add(p);
       }
